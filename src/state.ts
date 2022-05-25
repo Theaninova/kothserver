@@ -1,5 +1,5 @@
 import {Game} from "./game/game"
-import {Player} from "./game/player"
+import {Player} from "./api/player"
 import {WebSocket} from "ws"
 
 export const PORT = Number(process.env.PORT) || 8025

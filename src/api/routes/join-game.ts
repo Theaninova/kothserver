@@ -7,7 +7,7 @@ export enum JoinType {
 
 export interface JoinGameRequest extends ClientRequest<RequestType.JOIN_GAME> {
   username: string,
-  playerID: string,
+  playerID: number,
   joinAsPlayer: JoinType,
   gameID: number,
 }

@@ -17,3 +17,5 @@ server.on('connection', socket => {
     }
   })
 })
+
+console.log(`Server listening on port ${PORT}`)

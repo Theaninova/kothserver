@@ -1,2 +1,7 @@
 # Project exclude paths
 /node_modules/
+bin
+coverage
+.idea
+build
+declarations

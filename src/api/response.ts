@@ -1,5 +1,5 @@
 import {RequestType} from "./request";
-import {Player} from "../game/player"
+import {Player} from "./player"
 
 export interface ServerResponse<T extends RequestType> {
   type: T,

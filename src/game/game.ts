@@ -1,4 +1,4 @@
-import {Player} from "./player"
+import {Player} from "../api/player"
 import {Chess, PieceType, Square} from "chess.js"
 import {GameInfo} from "../api/response"
 
