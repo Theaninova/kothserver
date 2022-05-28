@@ -4,6 +4,7 @@ import {ServerResponse} from "./response"
 import {moveRoute} from "./routes/move"
 import {createGameRoute} from "./routes/create-game"
 import {getGamesRoute} from "./routes/get-games"
+import {joinGameRoute} from "./routes/join-game"
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const ROUTES: Partial<Record<RequestType, (request: ClientRequest<RequestType> & any) => ServerResponse<RequestType>>> = {
@@ -11,4 +12,5 @@ export const ROUTES: Partial<Record<RequestType, (request: ClientRequest<Request
   [RequestType.MOVE]: moveRoute,
   [RequestType.CREATE_GAME]: createGameRoute,
   [RequestType.GET_GAMES]: getGamesRoute,
+  [RequestType.JOIN_GAME]: joinGameRoute,
 }
