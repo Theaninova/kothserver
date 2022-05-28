@@ -1,5 +1,5 @@
 import {Player} from "../api/player"
-import {Chess, PieceType, Square} from "chess.js"
+import {Chess, PieceType, ShortMove, Square} from "chess.js"
 import {GameInfo} from "../api/response"
 
 export class Game {
@@ -48,7 +48,7 @@ export class Game {
     return false
   }
 
-  move(player: Player, move: string): boolean {
+  move(player: Player, move: string | ShortMove): boolean {
     if (this.players[this.chess.turn() === 'b' ? 1 : 0]?.playerID !== player.playerID) return false
 
     return !!this.chess.move(move)

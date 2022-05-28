@@ -1,6 +1,7 @@
 import {ClientRequest, RequestType} from "../request"
 import {ErrorResponse, GameResponse, IllegalMoveResponse, UnauthorizedResponse} from "../response"
 import {GAMES, playerValid} from "../../state"
+import {Square} from "chess.js"
 
 export interface MoveRequest extends ClientRequest<RequestType.MOVE> {
   username: string,
@@ -33,7 +34,17 @@ export function moveRoute(request: MoveRequest): MoveResponse | ErrorResponse | 
     }
   }
 
-  if (game.move(game.currentPlayer, request.move)) {
+  const match = request.move.match(/([a-h][1-8])([a-h][1-8])([NnBbQqRr])?/)
+
+  if (!match) {
+    return {
+      type: RequestType.ILLEGAL_MOVE,
+      message: "Format Mismatch",
+    }
+  }
+
+  const [, from, to, promotion] = match
+  if (game.move(game.currentPlayer, {from: from as Square, to: to as Square, promotion: promotion as never})) {
     return {
       ...game.response,
       type: RequestType.MOVE,
