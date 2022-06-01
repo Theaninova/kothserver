@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node --require ts-node/register src/index.ts",
+    "start": "node --experimental-specifier-resolution=node --loader ts-node/esm src/index.ts",
     "build": "tsc"
   },
   "type": "module",
