@@ -4,15 +4,17 @@ import {GAMES, playerValid} from "../../state"
 import {Square} from "chess.js"
 
 export interface MoveRequest extends ClientRequest<RequestType.MOVE> {
-  username: string,
-  playerID: number,
-  gameID: number,
-  move: string,
+  username: string
+  playerID: number
+  gameID: number
+  move: string
 }
 
 export type MoveResponse = GameResponse<RequestType.MOVE>
 
-export function moveRoute(request: MoveRequest): MoveResponse | ErrorResponse | UnauthorizedResponse | IllegalMoveResponse {
+export function moveRoute(
+  request: MoveRequest,
+): MoveResponse | ErrorResponse | UnauthorizedResponse | IllegalMoveResponse {
   if (!playerValid(request.username, request.playerID)) {
     return {
       type: RequestType.UNAUTHORIZED,
@@ -44,7 +46,9 @@ export function moveRoute(request: MoveRequest): MoveResponse | ErrorResponse | 
   }
 
   const [, from, to, promotion] = match
-  if (game.move(game.currentPlayer, {from: from as Square, to: to as Square, promotion: promotion as never})) {
+  if (
+    game.move(game.currentPlayer, {from: from as Square, to: to as Square, promotion: promotion as never})
+  ) {
     return {
       ...game.response,
       type: RequestType.MOVE,

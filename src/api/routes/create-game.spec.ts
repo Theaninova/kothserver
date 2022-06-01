@@ -2,12 +2,12 @@ import {CreateGameResponse, createGameRoute} from "./create-game"
 import {RequestType} from "../request"
 import {initState, PLAYER_NAMES, PLAYERS} from "../../state"
 
-describe("create game route", function() {
-  beforeEach(function() {
+describe("create game route", function () {
+  beforeEach(function () {
     initState()
   })
 
-  it("should not allow unauthorized players to create games", function() {
+  it("should not allow unauthorized players to create games", function () {
     const response = createGameRoute({
       username: "test",
       playerID: 1,
@@ -19,7 +19,7 @@ describe("create game route", function() {
     })
   })
 
-  it("should create a new game", function() {
+  it("should create a new game", function () {
     PLAYERS[1] = {
       playerID: 1,
       playerName: "test",

@@ -11,6 +11,8 @@ export interface GetGamesResponse extends ServerResponse<RequestType.GET_GAMES> 
 export function getGamesRoute(_request: GetGamesRequest): GetGamesResponse {
   return {
     type: RequestType.GET_GAMES,
-    games: Object.values(GAMES).map(it => it.response).sort((a, b) => b.ID - a.ID),
+    games: Object.values(GAMES)
+      .map(it => it.response)
+      .sort((a, b) => b.ID - a.ID),
   }
 }

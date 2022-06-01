@@ -8,10 +8,10 @@ export enum JoinType {
 }
 
 export interface JoinGameRequest extends ClientRequest<RequestType.JOIN_GAME> {
-  username: string,
-  playerID: number,
-  joinAsPlayer: JoinType,
-  gameID: number,
+  username: string
+  playerID: number
+  joinAsPlayer: JoinType
+  gameID: number
 }
 
 export type JoinGameResponse = GameResponse<RequestType.JOIN_GAME>
@@ -24,7 +24,9 @@ export interface GameNotFoundError extends ServerResponse<RequestType.NOT_FOUND>
   message: string
 }
 
-export function joinGameRoute(request: JoinGameRequest): JoinGameResponse | GameFullError | GameNotFoundError | UnauthorizedResponse {
+export function joinGameRoute(
+  request: JoinGameRequest,
+): JoinGameResponse | GameFullError | GameNotFoundError | UnauthorizedResponse {
   const game = GAMES[request.gameID]
   if (!game) {
     return {

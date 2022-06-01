@@ -7,7 +7,9 @@ import {getGamesRoute} from "./routes/get-games"
 import {joinGameRoute} from "./routes/join-game"
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const ROUTES: Partial<Record<RequestType, (request: ClientRequest<RequestType> & any) => ServerResponse<RequestType>>> = {
+export const ROUTES: Partial<
+  Record<RequestType, (request: ClientRequest<RequestType> & any) => ServerResponse<RequestType>>
+> = {
   [RequestType.LOGIN]: loginRoute,
   [RequestType.MOVE]: moveRoute,
   [RequestType.CREATE_GAME]: createGameRoute,

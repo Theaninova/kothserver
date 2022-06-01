@@ -8,7 +8,7 @@ export class Game {
   private readonly players: [Player | undefined, Player | undefined] = [undefined, undefined]
 
   private isCenterPiece(piece: PieceType): boolean {
-    return ['d4', 'd5', 'e4', 'e5'].some(square => this.chess.get(square as Square)?.type === piece)
+    return ["d4", "d5", "e4", "e5"].some(square => this.chess.get(square as Square)?.type === piece)
   }
 
   readonly maxPlayers = 2
@@ -20,11 +20,11 @@ export class Game {
   }
 
   get isDraw(): boolean {
-    return this.chess.in_draw() || this.isCenterPiece('k');
+    return this.chess.in_draw() || this.isCenterPiece("k")
   }
 
   get isOver(): boolean {
-    return this.chess.game_over();
+    return this.chess.game_over()
   }
 
   join(player: Player): boolean {
@@ -35,7 +35,7 @@ export class Game {
         return true
       }
     }
-    return true;
+    return true
   }
 
   leave(player: Player) {
@@ -49,17 +49,17 @@ export class Game {
   }
 
   move(player: Player, move: string | ShortMove): boolean {
-    if (this.players[this.chess.turn() === 'b' ? 1 : 0]?.playerID !== player.playerID) return false
+    if (this.players[this.chess.turn() === "b" ? 1 : 0]?.playerID !== player.playerID) return false
 
     return !!this.chess.move(move)
   }
 
   get moveHistory(): string[] {
-    return this.chess.history();
+    return this.chess.history()
   }
 
   get winner(): Player | undefined {
-    return undefined;
+    return undefined
   }
 
   get activePlayers(): Player[] {
@@ -67,7 +67,7 @@ export class Game {
   }
 
   get currentPlayer(): Player {
-    return this.players[this.chess.turn() === 'b' ? 1 : 0]!
+    return this.players[this.chess.turn() === "b" ? 1 : 0]!
   }
 
   get fen(): string {

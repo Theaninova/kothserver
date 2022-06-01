@@ -4,8 +4,8 @@ import {GAMES, generateID, playerValid} from "../../state"
 import {Game} from "../../game/game"
 
 export interface CreateGameRequest extends ClientRequest<RequestType.CREATE_GAME> {
-  username: string,
-  playerID: number,
+  username: string
+  playerID: number
 }
 
 export type CreateGameResponse = GameResponse<RequestType.CREATE_GAME>
@@ -18,7 +18,7 @@ export function createGameRoute(request: CreateGameRequest): CreateGameResponse 
   }
 
   const id = generateID(GAMES)
-  const game = GAMES[id] = new Game(id)
+  const game = (GAMES[id] = new Game(id))
 
   return {
     ...game.response,

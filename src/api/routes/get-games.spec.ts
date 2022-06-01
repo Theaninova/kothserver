@@ -3,12 +3,12 @@ import {RequestType} from "../request"
 import {GAMES, initState} from "../../state"
 import {Game} from "../../game/game"
 
-describe("get games", function() {
-  beforeEach(function() {
+describe("get games", function () {
+  beforeEach(function () {
     initState()
   })
 
-  it("should return all games", function() {
+  it("should return all games", function () {
     const game1 = new Game(123)
     const game2 = new Game(12)
     GAMES[123] = game1
@@ -19,9 +19,6 @@ describe("get games", function() {
     })
 
     expect(response.type).toBe(RequestType.GET_GAMES)
-    expect(response.games).toEqual([
-      game1.response,
-      game2.response,
-    ])
+    expect(response.games).toEqual([game1.response, game2.response])
   })
 })

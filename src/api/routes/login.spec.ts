@@ -3,19 +3,19 @@ import {RequestType} from "../request"
 import {ErrorResponse, PlayerInfoResponse} from "../response"
 import {initState, PLAYER_NAMES, PLAYERS} from "../../state"
 
-describe("login route", function() {
-  beforeEach(function() {
+describe("login route", function () {
+  beforeEach(function () {
     initState()
   })
 
-  it("should allow login with new username", function() {
+  it("should allow login with new username", function () {
     const response = loginRoute({
       type: RequestType.LOGIN,
       username: "test",
     }) as PlayerInfoResponse<RequestType.LOGIN>
 
     expect(response.type).toBe(RequestType.LOGIN)
-    expect(typeof response.playerID).toBe('number')
+    expect(typeof response.playerID).toBe("number")
     expect(response.playerName).toBe("test")
 
     expect(PLAYER_NAMES["test"]).toBe(response.playerID)
@@ -25,7 +25,7 @@ describe("login route", function() {
     })
   })
 
-  it("should refuse login with wrong ID", function() {
+  it("should refuse login with wrong ID", function () {
     const firstPlayer = loginRoute({
       type: RequestType.LOGIN,
       username: "test",
@@ -41,7 +41,7 @@ describe("login route", function() {
     expect(response.message).toBe("Username/ID mismatch")
   })
 
-  it("should login a player with an ID supplied that doesn't exist yet", function() {
+  it("should login a player with an ID supplied that doesn't exist yet", function () {
     const response = loginRoute({
       type: RequestType.LOGIN,
       username: "test",
@@ -59,7 +59,7 @@ describe("login route", function() {
     })
   })
 
-  it("should login an existing user", function() {
+  it("should login an existing user", function () {
     const firstPlayer = loginRoute({
       type: RequestType.LOGIN,
       username: "test",

@@ -3,8 +3,8 @@ import {ErrorResponse, PlayerInfoResponse} from "../response"
 import {generateID, PLAYER_NAMES, playerValid, PLAYERS, playerFree} from "../../state"
 
 export interface LoginRequest extends ClientRequest<RequestType.LOGIN> {
-  username: string,
-  playerID?: number,
+  username: string
+  playerID?: number
 }
 
 export type LoginResponse = PlayerInfoResponse<RequestType.LOGIN>

@@ -1,24 +1,24 @@
 import {GAMES, generateID, initState, PLAYER_NAMES, PLAYERS} from "./state"
 
-describe("state", function() {
-  beforeEach(function() {
+describe("state", function () {
+  beforeEach(function () {
     initState()
   })
 
-  it("should initialize the state", function() {
+  it("should initialize the state", function () {
     expect(GAMES).toEqual({})
     expect(PLAYERS).toEqual({})
     expect(PLAYER_NAMES).toEqual({})
   })
 
-  it("should generate a unique ID", function() {
+  it("should generate a unique ID", function () {
     const id1 = generateID(GAMES)
     const id2 = generateID(GAMES)
     expect(id1).toBeGreaterThan(0)
     expect(id1).not.toEqual(id2)
   })
 
-  it("should generate a unique ID", function() {
+  it("should generate a unique ID", function () {
     const id1 = generateID(PLAYERS)
     const id2 = generateID(PLAYERS)
     expect(id1).toBeGreaterThan(0)
@@ -26,8 +26,8 @@ describe("state", function() {
   })
 })
 
-describe("player", function() {
-  beforeEach(function() {
+describe("player", function () {
+  beforeEach(function () {
     initState()
   })
 

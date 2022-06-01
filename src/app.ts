@@ -5,10 +5,10 @@ import {determineTargets} from "./api/determine-targets"
 
 export const server = new WebSocketServer({
   port: PORT,
-});
+})
 
-server.on('connection', socket => {
-  socket.addEventListener('message', event => {
+server.on("connection", socket => {
+  socket.addEventListener("message", event => {
     const response = messageHandler(event.data)
     const socketResponse = JSON.stringify(response)
 

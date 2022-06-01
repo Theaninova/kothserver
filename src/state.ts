@@ -26,15 +26,9 @@ export function generateID(target: Record<number, unknown>): number {
 }
 
 export function playerValid(username?: string, playerID?: number): playerID is number {
-  return !!playerID &&
-    !!username &&
-    !!PLAYER_NAMES[username] &&
-    username === PLAYERS[playerID]?.playerName
+  return !!playerID && !!username && !!PLAYER_NAMES[username] && username === PLAYERS[playerID]?.playerName
 }
 
 export function playerFree(username?: string, playerID?: number): playerID is number {
-  return !!playerID &&
-    !!username &&
-    !PLAYER_NAMES[username] &&
-    !PLAYERS[playerID]
+  return !!playerID && !!username && !PLAYER_NAMES[username] && !PLAYERS[playerID]
 }
