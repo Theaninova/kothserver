@@ -10,8 +10,11 @@ export interface CreateGameRequest extends ClientRequest<RequestType.CREATE_GAME
 
 export type CreateGameResponse = GameResponse<RequestType.CREATE_GAME>
 
-export function createGameRoute(request: CreateGameRequest): CreateGameResponse | UnauthorizedResponse {
-  if (!playerValid(request.username, request.playerID)) {
+export function createGameRoute(
+  request: CreateGameRequest,
+  internalAuth = false,
+): CreateGameResponse | UnauthorizedResponse {
+  if (internalAuth || !playerValid(request.username, request.playerID)) {
     return {
       type: RequestType.UNAUTHORIZED,
     }

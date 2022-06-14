@@ -1,7 +1,9 @@
 import {ClientRequest, RequestType} from "../request"
 import {ErrorResponse, GameResponse, IllegalMoveResponse, UnauthorizedResponse} from "../response"
-import {GAMES, playerValid} from "../../state"
+import {GAMES, PLAYERS, playerValid} from "../../state"
 import {Square} from "chess.js"
+import {recalculateElo} from "../../elo"
+import {onGameEnd} from "./start-tournament"
 
 export interface MoveRequest extends ClientRequest<RequestType.MOVE> {
   username: string
@@ -49,6 +51,8 @@ export function moveRoute(
   if (
     game.move(game.currentPlayer, {from: from as Square, to: to as Square, promotion: promotion as never})
   ) {
+    if (game.isOver) onGameEnd(game)
+
     return {
       ...game.response,
       type: RequestType.MOVE,

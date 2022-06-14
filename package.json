@@ -19,6 +19,7 @@
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-unicorn": "^42.0.0",
     "jest": "^28.1.0",
+    "jest-websocket-mock": "^2.3.0",
     "prettier": "^2.5.1",
     "rimraf": "^3.0.2",
     "ts-jest": "^28.0.2"

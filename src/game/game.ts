@@ -13,7 +13,15 @@ export class Game {
 
   readonly maxPlayers = 2
 
-  constructor(readonly id: number) {}
+  readonly gameEnd: Promise<GameInfo>
+
+  onGameEnd!: (response: GameInfo) => void
+
+  constructor(readonly id: number) {
+    this.gameEnd = new Promise<GameInfo>(resolve => {
+      this.onGameEnd = resolve
+    })
+  }
 
   get isFull(): boolean {
     return this.players.every(it => !!it)
@@ -51,7 +59,11 @@ export class Game {
   move(player: Player, move: string | ShortMove): boolean {
     if (this.players[this.chess.turn() === "b" ? 1 : 0]?.playerID !== player.playerID) return false
 
-    return !!this.chess.move(move)
+    const valid = !!this.chess.move(move)
+    if (this.isOver) {
+      this.onGameEnd(this.response)
+    }
+    return valid
   }
 
   get moveHistory(): string[] {
@@ -62,8 +74,8 @@ export class Game {
     return undefined
   }
 
-  get activePlayers(): Player[] {
-    return this.players.filter(it => !!it) as Player[]
+  get activePlayers(): [Player, Player] {
+    return this.players.filter(it => !!it) as [Player, Player]
   }
 
   get currentPlayer(): Player {

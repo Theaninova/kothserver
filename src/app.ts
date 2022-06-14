@@ -3,6 +3,9 @@ import {PORT} from "./state"
 import {messageHandler} from "./api/message-handler"
 import {determineTargets} from "./api/determine-targets"
 
+// eslint-disable-next-line @typescript-eslint/no-empty-function
+export function importThisFile() {}
+
 export const server = new WebSocketServer({
   port: PORT,
 })

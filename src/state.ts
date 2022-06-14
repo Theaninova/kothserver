@@ -3,7 +3,6 @@ import {Player} from "./api/player"
 import {WebSocket} from "ws"
 
 export const PORT = Number(process.env.PORT) || 8025
-export const PATH = process.env.PATH || "websockets"
 
 export let GAMES: Record<number, Game> = {}
 export let PLAYERS: Record<number, Player> = {}

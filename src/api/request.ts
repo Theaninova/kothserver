@@ -9,6 +9,8 @@ export enum RequestType {
   DATABASE = 5,
 
   START_TOURNAMENT = 6,
+  GET_PLAYERS = 7,
+  GAME_STARTED = 8,
 
   ERROR = -1,
   ILLEGAL_MOVE = -2,

@@ -1,6 +1,7 @@
 import {ClientRequest, RequestType} from "../request"
 import {ErrorResponse, PlayerInfoResponse} from "../response"
 import {generateID, PLAYER_NAMES, playerValid, PLAYERS, playerFree} from "../../state"
+import {INITIAL_RATING} from "../../elo"
 
 export interface LoginRequest extends ClientRequest<RequestType.LOGIN> {
   username: string
@@ -14,6 +15,7 @@ export function loginRoute(request: LoginRequest): LoginResponse | ErrorResponse
     return {
       playerName: request.username,
       playerID: request.playerID,
+      rating: INITIAL_RATING,
       type: RequestType.LOGIN,
     }
   } else if (playerFree(request.username, request.playerID)) {
@@ -21,10 +23,10 @@ export function loginRoute(request: LoginRequest): LoginResponse | ErrorResponse
     PLAYERS[request.playerID] = {
       playerID: request.playerID,
       playerName: request.username,
+      rating: INITIAL_RATING,
     }
     return {
-      playerName: request.username,
-      playerID: request.playerID,
+      ...PLAYERS[request.playerID],
       type: RequestType.LOGIN,
     }
   } else if (request.username && PLAYER_NAMES[request.username]) {
@@ -38,11 +40,11 @@ export function loginRoute(request: LoginRequest): LoginResponse | ErrorResponse
     PLAYERS[id] = {
       playerID: id,
       playerName: request.username,
+      rating: INITIAL_RATING,
     }
 
     return {
-      playerName: request.username,
-      playerID: id,
+      ...PLAYERS[id],
       type: RequestType.LOGIN,
     }
   }
