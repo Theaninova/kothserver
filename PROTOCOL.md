@@ -70,6 +70,7 @@ export interface Player {
 interface GameInfo {
   activePlayerList: Player[]
   ID: number
+  timeLeft: [number, number] // player 1, player 2 (ms)
   moveHistory: string[]
   maxPlayerNumber: 2
   currentPlayer: Player
