@@ -20,21 +20,30 @@ export class Game {
 
   onGameEnd!: (response: GameInfo) => void
 
-  timeTerminate: NodeJS.Timeout
+  timeTerminate?: NodeJS.Timeout
 
   winner: Player | undefined = undefined
 
   onTimeout() {
     this.winner = this.currentPlayerId === 0 ? this.players[1] : this.players[0]
+    if (!process.env.NO_LOG) {
+      console.log("[GAME_END]", performance.now(), this.response)
+    }
     this.onGameEnd(this.response)
   }
 
-  constructor(readonly id: number, readonly maxTime: number) {
+  constructor(readonly id: number, readonly maxTime?: number) {
     this.gameEnd = new Promise<GameInfo>(resolve => {
       this.onGameEnd = resolve
     })
 
-    this.timeTerminate = setTimeout(() => this.onTimeout(), maxTime)
+    if (maxTime) {
+      this.timeTerminate = setTimeout(() => this.onTimeout(), maxTime)
+    }
+
+    if (!process.env.NO_LOG) {
+      console.log("[GAME_START]", performance.now(), {ID: id})
+    }
   }
 
   get isFull(): boolean {
@@ -49,11 +58,14 @@ export class Game {
     return this.chess.game_over() || this.isCenterPiece("k")
   }
 
-  get timeLeft(): [number, number] {
-    return [this.moveTimestamps, this.moveTimestamps.slice(1)].map(
-      it =>
-        this.maxTime - chunk(it, 2).reduce((accumulator, [a, b]) => accumulator + ((b || Date.now()) - a), 0),
-    ) as [number, number]
+  get timeLeft(): [number, number] | undefined {
+    return this.maxTime
+      ? ([this.moveTimestamps, this.moveTimestamps.slice(1)].map(
+          it =>
+            this.maxTime! -
+            chunk(it, 2).reduce((accumulator, [a, b]) => accumulator + ((b || Date.now()) - a), 0),
+        ) as [number, number])
+      : undefined
   }
 
   join(player: Player): boolean {
@@ -85,13 +97,18 @@ export class Game {
     if (this.isOver) {
       clearTimeout(this.timeTerminate)
       this.winner = this.chess.in_checkmate() || this.isCenterPiece("k") ? currentPlayer : undefined
+      if (!process.env.NO_LOG) {
+        console.log("[GAME_END]", performance.now(), this.response)
+      }
       this.onGameEnd(this.response)
       return true
     }
 
     this.moveTimestamps.push(Date.now())
     clearTimeout(this.timeTerminate)
-    this.timeTerminate = setTimeout(() => this.onTimeout(), this.timeLeft[this.currentPlayerId])
+    if (this.maxTime) {
+      this.timeTerminate = setTimeout(() => this.onTimeout(), this.timeLeft![this.currentPlayerId])
+    }
 
     return valid
   }

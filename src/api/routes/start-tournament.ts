@@ -19,6 +19,9 @@ export type StartTournamentResponse = ServerResponse<RequestType.START_TOURNAMEN
 
 export function onGameEnd(game: Game) {
   const players = recalculateElo(game.activePlayers, game.winner)
+  if (!process.env.NO_LOG) {
+    console.log("[ELO_CHANGE]", performance.now(), players)
+  }
   for (const player of players) {
     PLAYERS[player.playerID] = player
   }
@@ -33,8 +36,19 @@ export function startTournamentRoute(request: StartTournamentRequest): StartTour
 }
 
 async function tournamentManager(tournament: StartTournamentRequest): Promise<void> {
+  if (!process.env.NO_LOG) {
+    console.log("[TOURNAMENT_START]", performance.now(), Object.values(PLAYERS), tournament)
+  }
+
   for (let i = 0; i < tournament.ticks; i++) {
+    if (!process.env.NO_LOG) {
+      console.log("[TOURNAMENT_TICK]", performance.now(), i)
+    }
     await tournamentTick()
+  }
+
+  if (!process.env.NO_LOG) {
+    console.log("[TOURNAMENT_END]", performance.now(), Object.values(PLAYERS))
   }
 }
 

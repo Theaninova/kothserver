@@ -6,6 +6,7 @@ import {Game} from "../../game/game"
 export interface CreateGameRequest extends ClientRequest<RequestType.CREATE_GAME> {
   username: string
   playerID: number
+  timeout?: number
 }
 
 export type CreateGameResponse = GameResponse<RequestType.CREATE_GAME>
@@ -21,7 +22,7 @@ export function createGameRoute(
   }
 
   const id = generateID(GAMES)
-  const game = (GAMES[id] = new Game(id))
+  const game = (GAMES[id] = new Game(id, request.timeout))
 
   return {
     ...game.response,

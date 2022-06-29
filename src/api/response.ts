@@ -10,7 +10,7 @@ export type PlayerInfoResponse<T extends RequestType> = ServerResponse<T> & Play
 
 export interface GameInfo {
   activePlayerList: Player[]
-  timeLeft: [number, number]
+  timeLeft?: [number, number]
   ID: number
   moveHistory: string[]
   maxPlayerNumber: 2

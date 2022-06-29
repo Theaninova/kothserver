@@ -18,7 +18,6 @@ describe("game", function () {
       username: "abc",
       playerID: 123,
     }
-    client.send(JSON.stringify(joinRequest))
 
     return new Promise(resolve => {
       client.on("message", data => {
@@ -31,6 +30,8 @@ describe("game", function () {
 
         resolve(0)
       })
+
+      client.send(JSON.stringify(joinRequest))
     })
   })
 })

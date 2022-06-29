@@ -19,6 +19,8 @@ export enum RequestType {
   UNAUTHORIZED = -5,
   FULL = -6,
   NOT_FOUND = -7,
+
+  INTERNAL_SERVER_ERROR = -500,
 }
 
 export interface ClientRequest<T extends RequestType> {

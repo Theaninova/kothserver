@@ -23,6 +23,7 @@ describe("create game route", function () {
     PLAYERS[1] = {
       playerID: 1,
       playerName: "test",
+      rating: 1,
     }
     PLAYER_NAMES["test"] = 1
 
