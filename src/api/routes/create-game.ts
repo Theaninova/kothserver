@@ -15,7 +15,7 @@ export function createGameRoute(
   request: CreateGameRequest,
   internalAuth = false,
 ): CreateGameResponse | UnauthorizedResponse {
-  if (!internalAuth || !playerValid(request.username, request.playerID)) {
+  if (!internalAuth && !playerValid(request.username, request.playerID)) {
     return {
       type: RequestType.UNAUTHORIZED,
     }

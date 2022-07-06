@@ -1,10 +1,16 @@
 import {CreateGameResponse, createGameRoute} from "./create-game"
 import {RequestType} from "../request"
-import {initState, PLAYER_NAMES, PLAYERS} from "../../state"
+import {GAMES, initState, PLAYER_NAMES, PLAYERS} from "../../state"
 
 describe("create game route", function () {
   beforeEach(function () {
     initState()
+  })
+
+  it("should bypass auth with a parameter", function () {
+    const response = createGameRoute({} as never, true) as CreateGameResponse
+
+    expect(GAMES[response.ID]).toBeDefined()
   })
 
   it("should not allow unauthorized players to create games", function () {

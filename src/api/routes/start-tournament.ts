@@ -61,10 +61,12 @@ async function tournamentTick(): Promise<GameInfo[]> {
         for (const player of players) {
           game.join(player)
           setTimeout(() =>
-            CONNECTIONS[player.playerID].send({
-              ...game.response,
-              type: RequestType.GAME_STARTED,
-            }),
+            CONNECTIONS[player.playerID].send(
+              JSON.stringify({
+                ...game.response,
+                type: RequestType.GAME_STARTED,
+              }),
+            ),
           )
         }
         return game.gameEnd
