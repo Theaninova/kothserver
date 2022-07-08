@@ -138,6 +138,7 @@ export class Game {
       activePlayerList: this.activePlayers,
       ID: this.id,
       timeLeft: this.timeLeft,
+      moveTimestamps: this.moveTimestamps,
       moveHistory: this.moveHistory,
       maxPlayerNumber: 2,
       currentPlayer: this.currentPlayer,
