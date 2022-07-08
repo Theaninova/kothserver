@@ -44,7 +44,7 @@ async function tournamentManager(tournament: StartTournamentRequest): Promise<vo
     if (!process.env.NO_LOG) {
       console.log("[TOURNAMENT_TICK]", performance.now(), i)
     }
-    await tournamentTick()
+    await tournamentTick(tournament.gameTimeout)
   }
 
   if (!process.env.NO_LOG) {
@@ -52,12 +52,12 @@ async function tournamentManager(tournament: StartTournamentRequest): Promise<vo
   }
 }
 
-async function tournamentTick(): Promise<GameInfo[]> {
+async function tournamentTick(timeout: number): Promise<GameInfo[]> {
   return Promise.all(
     chunk(shuffle(Object.values(PLAYERS)), 2)
       .filter(it => it.length === 2)
       .map(players => {
-        const game = GAMES[(createGameRoute({} as never, true) as CreateGameResponse).ID]
+        const game = GAMES[(createGameRoute({timeout} as never, true) as CreateGameResponse).ID]
         for (const player of players) {
           game.join(player)
           setTimeout(() =>

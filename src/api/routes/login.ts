@@ -11,6 +11,8 @@ export interface LoginRequest extends ClientRequest<RequestType.LOGIN> {
 export type LoginResponse = PlayerInfoResponse<RequestType.LOGIN>
 
 export function loginRoute(request: LoginRequest): LoginResponse | ErrorResponse {
+  console.log("[PLAYER_LOGIN]", request)
+
   if (playerValid(request.username, request.playerID)) {
     return {
       playerName: request.username,
