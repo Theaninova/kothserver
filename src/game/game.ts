@@ -159,6 +159,10 @@ export class Game {
       winner: this.winner,
       over: this.isOver,
       inThreeFoldRepetition: this.chess.in_threefold_repetition(),
+      insufficientMaterial: this.chess.insufficient_material(),
+      stalemate: this.chess.in_stalemate(),
+      checkMate: this.chess.in_checkmate(),
+      check: this.chess.in_check(),
       draw: this.isDraw,
     }
   }

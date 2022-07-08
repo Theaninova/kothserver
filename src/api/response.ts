@@ -19,6 +19,10 @@ export interface GameInfo {
   winner?: Player
   fen: string
   inThreeFoldRepetition: boolean
+  insufficientMaterial: boolean
+  stalemate: boolean
+  checkMate: boolean
+  check: boolean
   over: boolean
   draw: boolean
 }
