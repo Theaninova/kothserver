@@ -158,6 +158,7 @@ export class Game {
       fen: this.fen,
       winner: this.winner,
       over: this.isOver,
+      inThreeFoldRepetition: this.chess.in_threefold_repetition(),
       draw: this.isDraw,
     }
   }
