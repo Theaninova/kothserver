@@ -11,6 +11,7 @@ import {CreateGameResponse, createGameRoute} from "./create-game"
 export interface StartTournamentRequest extends ClientRequest<RequestType.START_TOURNAMENT> {
   ticks: number
   gameTimeout: number
+  gameRetentionTime?: number
 }
 
 export type GameStartedResponse = GameResponse<RequestType.GAME_STARTED>
@@ -44,7 +45,7 @@ async function tournamentManager(tournament: StartTournamentRequest): Promise<vo
     if (!process.env.NO_LOG) {
       console.log("[TOURNAMENT_TICK]", performance.now(), i)
     }
-    await tournamentTick(tournament.gameTimeout)
+    await tournamentTick(tournament.gameTimeout, tournament.gameRetentionTime)
   }
 
   if (!process.env.NO_LOG) {
@@ -52,12 +53,13 @@ async function tournamentManager(tournament: StartTournamentRequest): Promise<vo
   }
 }
 
-async function tournamentTick(timeout: number): Promise<GameInfo[]> {
+async function tournamentTick(timeout: number, gameRetentionTime?: number): Promise<GameInfo[]> {
   return Promise.all(
     chunk(shuffle(Object.values(PLAYERS)), 2)
       .filter(it => it.length === 2)
       .map(players => {
-        const game = GAMES[(createGameRoute({timeout} as never, true) as CreateGameResponse).ID]
+        const game =
+          GAMES[(createGameRoute({timeout, gameRetentionTime} as never, true) as CreateGameResponse).ID]
         for (const player of players) {
           game.join(player)
           setTimeout(() =>

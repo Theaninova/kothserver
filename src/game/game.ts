@@ -2,6 +2,7 @@ import {Player} from "../api/player"
 import {Chess, PieceType, ShortMove, Square} from "chess.js"
 import {GameInfo} from "../api/response"
 import {chunk} from "../util/chunk"
+import {GAMES} from "../state"
 
 export class Game {
   readonly chess = new Chess()
@@ -24,7 +25,11 @@ export class Game {
 
   winner: Player | undefined = undefined
 
+  terminated = false
+
   onTimeout() {
+    this.scheduleDeletion()
+    this.terminated = true
     this.winner = this.currentPlayerId === 0 ? this.players[1] : this.players[0]
     if (!process.env.NO_LOG) {
       console.log("[GAME_END]", performance.now(), this.response)
@@ -32,7 +37,13 @@ export class Game {
     this.onGameEnd(this.response)
   }
 
-  constructor(readonly id: number, readonly maxTime?: number) {
+  scheduleDeletion() {
+    setTimeout(() => {
+      delete GAMES[this.id]
+    }, this.retentionTime)
+  }
+
+  constructor(readonly id: number, readonly maxTime?: number, readonly retentionTime = 30_000) {
     this.gameEnd = new Promise<GameInfo>(resolve => {
       this.onGameEnd = resolve
     })
@@ -90,11 +101,13 @@ export class Game {
   }
 
   move(player: Player, move: string | ShortMove): boolean {
-    if (this.currentPlayer?.playerID !== player.playerID) return false
+    if (this.currentPlayer?.playerID !== player.playerID || this.terminated) return false
 
     const currentPlayer = this.currentPlayer
     const valid = !!this.chess.move(move)
     if (this.isOver) {
+      this.scheduleDeletion()
+      this.terminated = true
       clearTimeout(this.timeTerminate)
       this.winner = this.chess.in_checkmate() || this.isCenterPiece("k") ? currentPlayer : undefined
       if (!process.env.NO_LOG) {
