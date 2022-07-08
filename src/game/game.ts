@@ -32,7 +32,7 @@ export class Game {
     this.terminated = true
     this.winner = this.currentPlayerId === 0 ? this.players[1] : this.players[0]
     if (!process.env.NO_LOG) {
-      console.log("[GAME_END]", performance.now(), this.response)
+      console.log("[GAME_END_TIMEOUT]", performance.now(), this.response)
     }
     this.onGameEnd(this.response)
   }
