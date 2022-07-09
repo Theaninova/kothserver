@@ -67,14 +67,22 @@ export interface Player {
 ```
 
 ```ts
-interface GameInfo {
+interface GameInfo { 
   activePlayerList: Player[]
   ID: number
-  timeLeft: [number, number] // player 1, player 2 (ms)
+  timeLeft?: [number, number] // player 1, player 2 (ms)
+  moveTimestamps: number[]
+  ID: number
   moveHistory: string[]
   maxPlayerNumber: 2
   currentPlayer: Player
+  winner?: Player
   fen: string
+  inThreeFoldRepetition: boolean
+  insufficientMaterial: boolean
+  stalemate: boolean
+  checkMate: boolean
+  check: boolean
   over: boolean
   draw: boolean
 }
@@ -113,6 +121,8 @@ interface GetGamesResponse {
 interface CreateGameRequest {
   username: string
   playerID: number
+  timeout?: number
+  gameRetentionTime?: number
 }
 
 type CreateGameResponse = GameInfo
@@ -170,6 +180,7 @@ Errors: `ERROR`, `UNAUTHORIZED`, `ILLEGAL_MOVE`
 interface StartTournamentRequest {
   ticks: number
   gameTimeout: number
+  gameRetentionTime?: number
 }
 
 type StartTournamentResponse = Message
