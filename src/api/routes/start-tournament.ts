@@ -60,6 +60,8 @@ async function tournamentTick(timeout: number, gameRetentionTime?: number): Prom
       .map(players => {
         const game =
           GAMES[(createGameRoute({timeout, gameRetentionTime} as never, true) as CreateGameResponse).ID]
+        game.gameEnd.then(() => onGameEnd(game))
+
         for (const player of players) {
           game.join(player)
           setTimeout(() =>

@@ -50,8 +50,6 @@ export function moveRoute(
   if (
     game.move(game.currentPlayer, {from: from as Square, to: to as Square, promotion: promotion as never})
   ) {
-    if (game.isOver) onGameEnd(game)
-
     return {
       ...game.response,
       type: RequestType.MOVE,
