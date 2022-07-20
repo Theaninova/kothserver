@@ -2,7 +2,6 @@ import {ClientRequest, RequestType} from "../request"
 import {ErrorResponse, GameResponse, IllegalMoveResponse, UnauthorizedResponse} from "../response"
 import {GAMES, playerValid} from "../../state"
 import {Square} from "chess.js"
-import {onGameEnd} from "./start-tournament"
 
 export interface MoveRequest extends ClientRequest<RequestType.MOVE> {
   username: string

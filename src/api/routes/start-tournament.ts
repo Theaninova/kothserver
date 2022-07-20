@@ -12,6 +12,7 @@ export interface StartTournamentRequest extends ClientRequest<RequestType.START_
   ticks: number
   gameTimeout: number
   gameRetentionTime?: number
+  auth: "PawnAttack"
 }
 
 export type GameStartedResponse = GameResponse<RequestType.GAME_STARTED>
@@ -37,6 +38,11 @@ export function startTournamentRoute(request: StartTournamentRequest): StartTour
 }
 
 async function tournamentManager(tournament: StartTournamentRequest): Promise<void> {
+  if (tournament.auth !== "PawnAttack") {
+    console.log("Someone hasn't understood the protocol and tried to start a tournament")
+    return {type: RequestType.UNAUTHORIZED} as never
+  }
+
   if (!process.env.NO_LOG) {
     console.log("[TOURNAMENT_START]", performance.now(), Object.values(PLAYERS), tournament)
   }
